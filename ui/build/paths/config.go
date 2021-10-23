@@ -98,10 +98,18 @@ var Configuration = map[string]PathConfig{
 	"tr":      Allowed,
 	"unzip":   Allowed,
 	"zip":     Allowed,
-	"arm-linux-androidkernel-as": Allowed,
-	"arm-linux-androidkernel-ld": Allowed,
 
+	// Kernel tools
+	"dtc":     Allowed,
 	"mkdtimg": Allowed,
+	"arm-linux-androidkernel-as":    Allowed,
+	"arm-linux-androidkernel-ld":    Allowed,
+	"aarch64-linux-android-ar":      Allowed,
+	"aarch64-linux-android-as":      Allowed,
+	"aarch64-linux-android-ld":      Allowed,
+	"aarch64-linux-android-objcopy": Allowed,
+	"aarch64-linux-android-objdump": Allowed,
+	"aarch64-linux-android-nm":      Allowed,
 
 	// Host toolchain is removed. In-tree toolchain should be used instead.
 	// GCC also can't find cc1 with this implementation.
