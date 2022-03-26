@@ -93,6 +93,7 @@ var Configuration = map[string]PathConfig{
 	"hexdump": Allowed,
 	"jar":     Allowed,
 	"java":    Allowed,
+	"javac":   Allowed,
 	"javap":   Allowed,
 	"lsof":    Allowed,
 	"m4":      Allowed,
@@ -104,12 +105,15 @@ var Configuration = map[string]PathConfig{
 	"python3.6":Allowed,
 	"python3.8":Allowed,
 	"python3.9":Allowed,
+	"lsb_release":Allowed,
+	"apt-cache":Allowed,
 	"repo":    Allowed,
 	"rsync":   Allowed,
 	"sh":      Allowed,
 	"tr":      Allowed,
 	"unzip":   Allowed,
 	"zip":     Allowed,
+	"7z":     Allowed,
 
 	// Kernel tools
 	"dtc":     Allowed,
