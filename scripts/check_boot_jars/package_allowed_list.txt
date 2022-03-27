@@ -70,6 +70,7 @@ javax\.xml\.transform\.stream
 javax\.xml\.validation
 javax\.xml\.xpath
 jdk\.internal\.util
+jdk\.internal\.math
 jdk\.internal\.vm\.annotation
 jdk\.net
 org\.w3c\.dom
