@@ -267,6 +267,7 @@ var (
 	systemModulesTag        = dependencyTag{name: "system modules"}
 	frameworkResTag         = dependencyTag{name: "framework-res"}
 	lineageResTag           = dependencyTag{name: "org.lineageos.platform-res"}
+	ngResTag                = dependencyTag{name: "org.eu.droid_ng.platform-res"}
 	kotlinStdlibTag         = dependencyTag{name: "kotlin-stdlib"}
 	kotlinAnnotationsTag    = dependencyTag{name: "kotlin-annotations"}
 	proguardRaiseTag        = dependencyTag{name: "proguard-raise"}
@@ -310,6 +311,7 @@ type sdkDep struct {
 
 	frameworkResModule string
 	lineageResModule   string
+	ngResModule        string
 
 	jars android.Paths
 	aidl android.OptionalPath
@@ -350,6 +352,9 @@ func sdkDeps(ctx android.BottomUpMutatorContext, sdkContext android.SdkContext, 
 		ctx.AddVariationDependencies(nil, systemModulesTag, sdkDep.systemModules)
 	}
 	if ctx.ModuleName() == "org.lineageos.platform-res" {
+		ctx.AddDependency(ctx.Module(), frameworkResTag, "framework-res")
+	}
+	if ctx.ModuleName() == "org.eu.droid_ng.platform-res" {
 		ctx.AddDependency(ctx.Module(), frameworkResTag, "framework-res")
 	}
 }

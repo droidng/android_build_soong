@@ -116,7 +116,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 		}
 	}
 
-	toModule := func(modules []string, res string, lineageRes string, aidl android.Path) sdkDep {
+	toModule := func(modules []string, res string, lineageRes string, ngRes string, aidl android.Path) sdkDep {
 		return sdkDep{
 			useModule:          true,
 			bootclasspath:      append(modules, config.DefaultLambdaStubsLibrary),
@@ -124,6 +124,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			java9Classpath:     modules,
 			frameworkResModule: res,
 			lineageResModule:   lineageRes,
+			ngResModule:        ngRes,
 			aidl:               android.OptionalPathForPath(aidl),
 		}
 	}
@@ -137,6 +138,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			classpath:          config.FrameworkLibraries,
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			ngResModule:        "org.eu.droid_ng.platform-res",
 		}
 	case android.SdkNone:
 		systemModules := sdkContext.SystemModules()
@@ -163,11 +165,11 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			noFrameworksLibs: true,
 		}
 	case android.SdkPublic:
-		return toModule([]string{"android_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_stubs_current"}, "framework-res", "org.lineageos.platform-res", "org.eu.droid_ng.platform-res", sdkFrameworkAidlPath(ctx))
 	case android.SdkSystem:
-		return toModule([]string{"android_system_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_system_stubs_current"}, "framework-res", "org.lineageos.platform-res", "org.eu.droid_ng.platform-res", sdkFrameworkAidlPath(ctx))
 	case android.SdkTest:
-		return toModule([]string{"android_test_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_test_stubs_current"}, "framework-res", "org.lineageos.platform-res", "org.eu.droid_ng.platform-res", sdkFrameworkAidlPath(ctx))
 	case android.SdkCore:
 		return sdkDep{
 			useModule:        true,
@@ -184,6 +186,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			java9Classpath:     []string{"android_module_lib_stubs_current"},
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			ngResModule:        "org.eu.droid_ng.platform-res",
 			aidl:               android.OptionalPathForPath(nonUpdatableFrameworkAidlPath(ctx)),
 		}
 	case android.SdkSystemServer:
@@ -195,6 +198,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			java9Classpath:     []string{"android_system_server_stubs_current"},
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			ngResModule:        "org.eu.droid_ng.platform-res",
 			aidl:               android.OptionalPathForPath(sdkFrameworkAidlPath(ctx)),
 		}
 	default:

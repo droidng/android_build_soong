@@ -233,7 +233,7 @@ func (a *aapt) aapt2Flags(ctx android.ModuleContext, sdkContext android.SdkConte
 
 	if !hasVersionName {
 		var versionName string
-		if ctx.ModuleName() == "framework-res" || ctx.ModuleName() == "org.lineageos.platform-res" {
+		if ctx.ModuleName() == "framework-res" || ctx.ModuleName() == "org.lineageos.platform-res" || ctx.ModuleName() == "org.eu.droid_ng.platform-res" {
 			// Some builds set AppsDefaultVersionName() to include the build number ("O-123456").  aapt2 copies the
 			// version name of framework-res into app manifests as compileSdkVersionCodename, which confuses things
 			// if it contains the build number.  Use the PlatformVersionName instead.
@@ -260,6 +260,9 @@ func (a *aapt) deps(ctx android.BottomUpMutatorContext, sdkDep sdkDep) {
 	}
 	if sdkDep.lineageResModule != "" {
 		ctx.AddVariationDependencies(nil, lineageResTag, sdkDep.lineageResModule)
+	}
+	if sdkDep.ngResModule != "" {
+		ctx.AddVariationDependencies(nil, ngResTag, sdkDep.ngResModule)
 	}
 }
 
@@ -432,7 +435,7 @@ func aaptLibs(ctx android.ModuleContext, sdkContext android.SdkContext, classLoa
 			if exportPackage != nil {
 				sharedLibs = append(sharedLibs, exportPackage)
 			}
-		case frameworkResTag, lineageResTag:
+		case frameworkResTag, lineageResTag, ngResTag:
 			if exportPackage != nil {
 				sharedLibs = append(sharedLibs, exportPackage)
 			}
@@ -724,6 +727,9 @@ func (a *AARImport) DepsMutator(ctx android.BottomUpMutatorContext) {
 		}
 		if sdkDep.useModule && sdkDep.lineageResModule != "" {
 			ctx.AddVariationDependencies(nil, lineageResTag, sdkDep.lineageResModule)
+		}
+		if sdkDep.useModule && sdkDep.ngResModule != "" {
+			ctx.AddVariationDependencies(nil, ngResTag, sdkDep.ngResModule)
 		}
 	}
 

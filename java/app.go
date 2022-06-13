@@ -451,6 +451,9 @@ func (a *AndroidApp) installPath(ctx android.ModuleContext) android.InstallPath 
 	} else if ctx.ModuleName() == "org.lineageos.platform-res" {
 		// org.lineageos.platform-res.apk is installed as system/framework/org.lineageos.platform-res.apk
 		installDir = "framework"
+	} else if ctx.ModuleName() == "org.eu.droid_ng.platform-res" {
+		// org.eu.droid_ng.platform-res.apk is installed as system/framework/org.eu.droid_ng.platform-res.apk
+		installDir = "framework"
 	} else if a.Privileged() {
 		installDir = filepath.Join("priv-app", a.installApkName)
 	} else {
@@ -472,7 +475,7 @@ func (a *AndroidApp) dexBuildActions(ctx android.ModuleContext) android.Path {
 	a.dexpreopter.classLoaderContexts = a.classLoaderContexts
 	a.dexpreopter.manifestFile = a.mergedManifestFile
 
-	if ctx.ModuleName() != "framework-res" && ctx.ModuleName() != "org.lineageos.platform-res" {
+	if ctx.ModuleName() != "framework-res" && ctx.ModuleName() != "org.lineageos.platform-res" && ctx.ModuleName() != "org.eu.droid_ng.platform-res" {
 		a.Module.compile(ctx, a.aaptSrcJar)
 	}
 
@@ -628,6 +631,9 @@ func (a *AndroidApp) generateAndroidBuildActions(ctx android.ModuleContext) {
 		a.installDir = android.PathForModuleInstall(ctx, "framework")
 	} else if ctx.ModuleName() == "org.lineageos.platform-res" {
 		// org.lineageos.platform-res.apk is installed as system/framework/org.lineageos.platform-res.apk
+		a.installDir = android.PathForModuleInstall(ctx, "framework")
+	} else if ctx.ModuleName() == "org.eu.droid_ng.platform-res" {
+		// org.eu.droid_ng.platform-res.apk is installed as system/framework/org.eu.droid_ng.platform-res.apk
 		a.installDir = android.PathForModuleInstall(ctx, "framework")
 	} else if a.Privileged() {
 		a.installDir = android.PathForModuleInstall(ctx, "priv-app", a.installApkName)
