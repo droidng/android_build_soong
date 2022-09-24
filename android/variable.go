@@ -73,10 +73,6 @@ type variableProperties struct {
 		Safestack struct {
 			Cflags []string `android:"arch_variant"`
 		} `android:"arch_variant"`
-		
-		Have_mtk_fm struct {
-			Cflags []string
-		}
 
 		Binder32bit struct {
 			Cflags []string
@@ -409,8 +405,6 @@ type productVariables struct {
 	SelinuxIgnoreNeverallows bool `json:",omitempty"`
 
 	SepolicySplit bool `json:",omitempty"`
-	
-	Have_mtk_fm *bool `json:",omitempty"`
 }
 
 func boolPtr(v bool) *bool {
@@ -458,7 +452,6 @@ func (v *productVariables) SetDefaultConfig() {
 		Malloc_zero_contents:         boolPtr(true),
 		Malloc_pattern_fill_contents: boolPtr(false),
 		Safestack:                    boolPtr(false),
-		Have_mtk_fm:                  boolPtr(false),
 
 		BootJars:          ConfiguredJarList{apexes: []string{}, jars: []string{}},
 		UpdatableBootJars: ConfiguredJarList{apexes: []string{}, jars: []string{}},
